@@ -1,8 +1,8 @@
 # Mirori_ACQ
 
-###Programme d'acquisition - FR
+### Programme d'acquisition - FR
 
-##INSTALLATION
+## INSTALLATION
 `sudo apt install libopencv-dev python3-opencv`<br>
 
 `python3 pip install`<br>
@@ -16,7 +16,7 @@ ou<br>
 `pip install scp`<br>
 `pip install numpy`<br>
 
-Pour lancer le module d'acquisition :
+## LANCEMENT DE L'ACQUISITION :
 
 Une fois dans le dossier du projet, vous pouvez executer les commandes suivantes:
 
@@ -25,7 +25,7 @@ ou<br>
 `python3 index.py #l'email vous seras demandé dans la console`
 
 
-Une fois les librairies chargé par le script et une fois l'email renseigné, votre caméra devrait s'allumer, vous aurez 2 choix possibles "ESC" ou "SPACE BAR" pour la touche "échap" et "espace" de
+Une fois les librairies chargé par le script et une fois l'email renseigné, votre caméra devrait s'allumer, vous aurez 2 choix possibles ***"ESC"*** ou ***"SPACE BAR"*** pour la touche ***"échap"*** et ***"espace"*** de
 votre clavier.
 
 Si l'image de référence vous parait cadré correctement, vous pouvez appuyer sur la barre d'espace.
