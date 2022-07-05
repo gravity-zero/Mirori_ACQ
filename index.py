@@ -29,6 +29,9 @@ if not res["id"]:
 id = res["id"]
 
 video_capture = cv2.VideoCapture(0)
+video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
+video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
+
 
 face_locations = []
 
