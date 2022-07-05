@@ -40,11 +40,10 @@ def scp_upload(file_to_move, path_to_directory='./mirori_faces/'):
 def scp_download(file_to_dl, directory):
     if file_to_dl.find('*') != -1:
         files = ssh_command("ls "+file_to_dl)
-        i=0
-        for file in files.split("\n"):
+        for path_to_file in files.split("\n"):
             scp = scp_connection()
-            scp.get(file, directory+file)
-            i+=1
+            file = path_to_file.split("/")[1]
+            scp.get(path_to_file, directory+file)
     else:
         scp = scp_connection()
         scp.get(file_to_dl, directory+file_to_dl)

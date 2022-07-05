@@ -3,7 +3,7 @@ import numpy as np
 import os
 import glob
 import sys
-sys.path.append('../')
+#sys.path.append('../')
 from services import ssh_scp as conn
 
 def encoding_image(dir_identites):
@@ -12,19 +12,14 @@ def encoding_image(dir_identites):
     face_names=[]
 
     #Comment next line : scp_download for test
-    #conn.scp_download('mirori_faces/*', "../npy_files/")
+    conn.scp_download('mirori_faces/*', "npy_files/")
 
     is_npy_file = os.path.isfile('npy_files/face_names.npy')
 
     if is_npy_file:
         npyFaceName = np.load('npy_files/face_names.npy')
         npyFaceEncode = np.load('npy_files/face_encodings.npy')
-
-
-    id=1
     for dir_identite in os.listdir(dir_identites):
-        print("ID", id)
-        id+=1
 
         fichiers=[]
         for ext in ["*.jpg", "*.jpeg", "*.png"]:
@@ -37,12 +32,11 @@ def encoding_image(dir_identites):
             print(fichier)
             if is_npy_file and filename not in npyFaceName or not is_npy_file:
                 image=face_recognition.load_image_file(fichier)
+                print(image)
                 embedding=face_recognition.face_encodings(image)[0]
                 face_encodings.append(embedding)
                 face_names.append(filename)
 
-    
-    
     if is_npy_file and len(face_names) > 0 :
         for faceEncoding in face_encodings:            
             np.save("npy_files/face_encodings", np.array(np.append(npyFaceEncode, faceEncoding)))
@@ -51,7 +45,7 @@ def encoding_image(dir_identites):
         for faceName in face_names: 
             np.save("npy_files/face_names", np.array(np.append(npyFaceName, faceName)))
             print('Append new face', faceName, '\n')
-        print('New array', np.load('face_names.npy'))
+        print('New array', np.load('npy_files/face_names.npy'))
             
     elif len(face_names) > 0 :
         np.save("npy_files/face_encodings", np.array(face_encodings))
