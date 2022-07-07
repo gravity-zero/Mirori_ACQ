@@ -17,7 +17,7 @@ else:
 back_route = os.getenv("back_route")
 api_key = os.getenv("api_key")
 data = {"api_key": api_key}
-composed_route = back_route + "api/visitor/email/" + email
+composed_route = back_route + "api/user/email/" + email
 response = requests.post(composed_route, data=data)
 if response.status_code != 200:
     print("Erreur avec l'API, email inconnue ?")
@@ -35,7 +35,7 @@ video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
 face_locations = []
 
-
+print("****** ACQ PROGRAMM IS READY ! ******")
 print("SPACE BAR FOR TAKING A REFERENCE FACE IMAGE")
 print("ESC FOR EXIT")
 while True:

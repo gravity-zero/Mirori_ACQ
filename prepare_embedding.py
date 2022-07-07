@@ -2,8 +2,6 @@ import face_recognition
 import numpy as np
 import os
 import glob
-import sys
-#sys.path.append('../')
 from services import ssh_scp as conn
 
 def encoding_image(dir_identites):
@@ -11,8 +9,8 @@ def encoding_image(dir_identites):
     face_encodings=[]
     face_names=[]
 
-    #Comment next line : scp_download for test
-    conn.scp_download('mirori_faces/*', "npy_files/")
+    #Comment because we have one acquisition source + if we don't have the same webcam (on multiple acq source) resolution a bug append
+    #conn.scp_download('mirori_faces/*', "npy_files/")
 
     is_npy_file = os.path.isfile('npy_files/face_names.npy')
 
@@ -29,10 +27,8 @@ def encoding_image(dir_identites):
             continue
         for fichier in fichiers:
             filename = dir_identite.replace('_', ' ')
-            print(fichier)
             if is_npy_file and filename not in npyFaceName or not is_npy_file:
                 image=face_recognition.load_image_file(fichier)
-                print(image)
                 embedding=face_recognition.face_encodings(image)[0]
                 face_encodings.append(embedding)
                 face_names.append(filename)
@@ -41,16 +37,14 @@ def encoding_image(dir_identites):
         for faceEncoding in face_encodings:            
             np.save("npy_files/face_encodings", np.array(np.append(npyFaceEncode, faceEncoding)))
             print('Append encoding new face')
-        print(face_names)
         for faceName in face_names: 
             np.save("npy_files/face_names", np.array(np.append(npyFaceName, faceName)))
             print('Append new face', faceName, '\n')
-        print('New array', np.load('npy_files/face_names.npy'))
             
     elif len(face_names) > 0 :
         np.save("npy_files/face_encodings", np.array(face_encodings))
-        print('encoding all faces', embedding)
         np.save("npy_files/face_names", np.array(face_names))
-        print('Add all face names', face_names) 
+        print("face encoding !")
     conn.scp_upload('npy_files/face_encodings.npy')
     conn.scp_upload('npy_files/face_names.npy')
+    print("Successfuly upload!")
