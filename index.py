@@ -7,7 +7,7 @@ import requests
 
 load_dotenv("./.env")
 
-
+#conn.scp_download('mirori_faces/*', "npy_files/")
 
 if len(sys.argv) > 1:
     email = sys.argv[1]
@@ -28,7 +28,7 @@ if not res["id"]:
     exit()
 id = res["id"]
 
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture(0, cv2.CAP_V4L2)
 video_capture.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
 video_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
@@ -40,6 +40,7 @@ print("SPACE BAR FOR TAKING A REFERENCE FACE IMAGE")
 print("ESC FOR EXIT")
 while True:
     ret, frame = video_capture.read()  # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+    #ERROR IF NO FACE DETETED
     rgb_frame = frame[:, :, ::-1]  # Find all the faces in the current frame of video
     face_locations = face_recognition.face_locations(rgb_frame)  # Display the results
     for top, right, bottom, left in face_locations:
@@ -56,7 +57,7 @@ while True:
         break
     elif key & key % 256 == 32:
         # SPACE pressed for Screenshot
-        img_name = "identity.png"
+        img_name = "identity.jpeg"
         parent_folder = "./identified/"
         folder = str(id) + "/"
         path = os.path.join(parent_folder, folder)

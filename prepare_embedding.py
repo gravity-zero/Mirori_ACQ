@@ -27,6 +27,7 @@ def encoding_image(dir_identites):
             continue
         for fichier in fichiers:
             filename = dir_identite.replace('_', ' ')
+            #print(filename not in npyFaceName)
             if is_npy_file and filename not in npyFaceName or not is_npy_file:
                 image=face_recognition.load_image_file(fichier)
                 embedding=face_recognition.face_encodings(image)[0]
@@ -34,12 +35,10 @@ def encoding_image(dir_identites):
                 face_names.append(filename)
 
     if is_npy_file and len(face_names) > 0 :
-        for faceEncoding in face_encodings:            
-            np.save("npy_files/face_encodings", np.array(np.append(npyFaceEncode, faceEncoding)))
-            print('Append encoding new face')
-        for faceName in face_names: 
-            np.save("npy_files/face_names", np.array(np.append(npyFaceName, faceName)))
-            print('Append new face', faceName, '\n')
+        np.save("npy_files/face_encodings", np.append(npyFaceEncode, face_encodings, axis=0))
+        print('Append encoding new face')
+        np.save("npy_files/face_names", np.append(npyFaceName, face_names, axis=0))
+        print('Append new face', face_names, '\n')
             
     elif len(face_names) > 0 :
         np.save("npy_files/face_encodings", np.array(face_encodings))
